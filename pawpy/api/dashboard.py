@@ -10,8 +10,6 @@ import json
 import logging
 from typing import Set
 
-from fastapi import WebSocket
-
 logger = logging.getLogger("pawpy.dashboard")
 
 _connections: Set = set()

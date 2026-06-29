@@ -8,9 +8,10 @@ api, dashboard).
 from __future__ import annotations
 
 import argparse
+import asyncio
 import logging
 import sys
-import asyncio
+
 from pawpy import __version__
 from pawpy.config import PawpyConfig
 from pawpy.utils import confirm_ethical_use, console, print_banner, setup_logging
