@@ -10,6 +10,8 @@ import json
 import logging
 from typing import Set
 
+from fastapi import WebSocket
+
 logger = logging.getLogger("pawpy.dashboard")
 
 _connections: Set = set()
@@ -87,7 +89,7 @@ _DASHBOARD_HTML = """<!DOCTYPE html>
         </div>
     </div>
     <script>
-        const ws = new WebSocket(`ws://${window.location.host}/ws`);
+        const ws = new WebSocket(`ws://127.0.0.1:8080/ws`);
         ws.onmessage = (e) => {
             const msg = JSON.parse(e.data);
             const logArea = document.getElementById('logArea');
@@ -121,7 +123,7 @@ _DASHBOARD_HTML = """<!DOCTYPE html>
             formData.append('min_strength', document.getElementById('scoring').checked ? '2' : '');
             addLog('Starting generation...', 'info');
             try {
-                const resp = await fetch('/generate', { method: 'POST', body: formData });
+                const resp = await fetch('http://127.0.0.1:8000/generate', {method: 'POST', body: formData});
                 const data = await resp.json();
                 if (data.download_url) {
                     addLog('Done! Download: ' + data.download_url, 'success');
@@ -177,7 +179,15 @@ def run_dashboard(host: str = "127.0.0.1", port: int = 8080):
     @app.websocket("/ws")
     async def websocket_endpoint(websocket: WebSocket):
         await websocket.accept()
-        await _websocket_handler(websocket)
+        _connections.add(websocket)
+
+        try:
+            while True:
+                await websocket.receive_text()  # keep connection alive
+        except Exception:
+            _connections.discard(websocket)
+        finally:
+            _connections.discard(websocket)
 
     logger.info("Starting Pawpy Dashboard on http://%s:%d", host, port)
     uvicorn.run(app, host=host, port=port)

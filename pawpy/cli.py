@@ -10,7 +10,7 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-
+import asyncio
 from pawpy import __version__
 from pawpy.config import PawpyConfig
 from pawpy.utils import confirm_ethical_use, console, print_banner, setup_logging
@@ -232,7 +232,7 @@ def handle_dashboard() -> None:
 
     console.print("[cyan]Starting Pawpy Web Dashboard...[/cyan]")
     try:
-        run_dashboard()
+        asyncio.run(run_dashboard())
     except ImportError as e:
         console.print(f"[red]Missing dependency:[/red] {e}")
         sys.exit(1)

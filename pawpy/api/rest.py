@@ -30,9 +30,10 @@ def get_app():
         title="Pawpy API",
         description="Educational Wordlist Generator – REST API",
         version="1.0.0",
+        # ⚠️ optional safety switch if OpenAPI keeps crashing on Python 3.14
+        # openapi_url=None,
     )
 
-    # In-memory job store (simple; production would use a database)
     _jobs: Dict[str, Dict[str, Any]] = {}
 
     @app.get("/")
@@ -50,13 +51,14 @@ def get_app():
         markov: Annotated[bool, Form()] = False,
     ):
         """Generate a wordlist from an uploaded profile JSON file."""
+
         job_id = str(uuid.uuid4())[:8]
         out_file = output or f"pawpy_{job_id}.txt"
 
-        # Save uploaded profile to temp file
         tmp_profile = tempfile.NamedTemporaryFile(
             mode="w", suffix=".json", delete=False, prefix="pawpy_profile_"
         )
+
         content = await profile.read()
         tmp_profile.write(content.decode("utf-8", errors="ignore"))
         tmp_profile.close()
@@ -78,6 +80,7 @@ def get_app():
 
             collector = ProfileCollector()
             prof = collector.run(config)
+
             orchestrator = PipelineOrchestrator(config, prof)
             result_path = orchestrator.run()
 
@@ -101,6 +104,7 @@ def get_app():
                 status_code=500,
                 content={"job_id": job_id, "status": "error", "message": str(e)},
             )
+
         finally:
             try:
                 os.unlink(tmp_profile.name)
@@ -109,12 +113,14 @@ def get_app():
 
     @app.get("/download/{job_id}")
     async def download_wordlist(job_id: str):
-        """Download a generated wordlist by job ID."""
         job = _jobs.get(job_id)
+
         if not job or job["status"] != "completed":
             return JSONResponse(
-                status_code=404, content={"error": "Job not found or not completed"}
+                status_code=404,
+                content={"error": "Job not found or not completed"},
             )
+
         return FileResponse(
             job["output"],
             media_type="text/plain",
@@ -123,7 +129,6 @@ def get_app():
 
     @app.get("/jobs")
     async def list_jobs():
-        """List all generation jobs."""
         return {"jobs": _jobs}
 
     _app = app
@@ -131,13 +136,10 @@ def get_app():
 
 
 def run_api(host: str = "127.0.0.1", port: int = 8000):
-    """Start the API server using uvicorn."""
+    """Start API server."""
     app = get_app()
-    try:
-        import uvicorn
-    except ImportError:
-        raise ImportError(
-            "uvicorn is required for API mode. " "Install it with: pip install uvicorn"
-        )
+
+    import uvicorn
+
     logger.info("Starting Pawpy API on %s:%d", host, port)
     uvicorn.run(app, host=host, port=port)

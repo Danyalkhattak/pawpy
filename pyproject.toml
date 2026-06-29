@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-{name = "Danyal Khattak", email = "[Danyalkhattak739@icloud.com](mailto:Danyalkhattak739@icloud.com)"}
+{name = "Danyal Khattak", email = "Danyalkhattak739@icloud.com"}
 ]
 
 keywords = [
