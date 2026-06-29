@@ -9,8 +9,7 @@ setup(
     author="Danyal Khattak",
     author_email="Danyalkhattak739@icloud.com",
     description=(
-        "Advanced wordlist generator for OSINT, "
-        "pentesting, and security research"
+        "Advanced wordlist generator for OSINT, " "pentesting, and security research"
     ),
     long_description=long_description,
     long_description_content_type="text/markdown",
