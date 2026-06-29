@@ -41,12 +41,13 @@ def setup_logging(verbose: bool = False) -> logging.Logger:
 # ---------------------------------------------------------------------------
 
 BANNER_TEXT = r"""
- ██████╗██╗   ██╗██████╗ ███████╗██████╗
-██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗
-██║      ╚████╔╝ ██████╔╝█████╗  ██████╔╝
-██║       ╚██╔╝  ██╔══██╗██╔══╝  ██╔══██╗
-╚██████╗   ██║   ██████╔╝███████╗██║  ██║
- ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝
+██████╗  █████╗ ██╗    ██╗██████╗ ██╗   ██╗
+██╔══██╗██╔══██╗██║    ██║██╔══██╗╚██╗ ██╔╝
+██████╔╝███████║██║ █╗ ██║██████╔╝ ╚████╔╝ 
+██╔═══╝ ██╔══██║██║███╗██║██╔═══╝   ╚██╔╝  
+██║     ██║  ██║╚███╔███╔╝██║        ██║   
+╚═╝     ╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝        ╚═╝   
+     The Most Powerful Wordlist Generator
 """
 
 ETHICAL_WARNING = (
@@ -127,7 +128,7 @@ def confirm_ethical_use() -> bool:
     """Prompt the user to confirm ethical use. Returns True on 'y'."""
     return (
         console.input(
-            "[bold yellow]Do you confirm you have authorisation? [y/N]: [/bold yellow]"
+            "[bold yellow]Do you confirm you have authorisation? {y/N}: [/bold yellow]"
         )
         .strip()
         .lower()

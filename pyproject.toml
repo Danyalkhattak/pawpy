@@ -1,5 +1,94 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pawpy-cli"
+version = "1.0.0"
+description = "Advanced wordlist generator for OSINT, pentesting, and security research"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+{name = "Danyal Khattak", email = "[Danyalkhattak739@icloud.com](mailto:Danyalkhattak739@icloud.com)"}
+]
+
+keywords = [
+"wordlist",
+"password",
+"osint",
+"pentesting",
+"cybersecurity",
+"security",
+"dictionary",
+"generator",
+"cli",
+"redteam"
+]
+
+classifiers = [
+"Development Status :: 4 - Beta",
+"Intended Audience :: Developers",
+"Intended Audience :: Education",
+"Intended Audience :: Information Technology",
+"Intended Audience :: System Administrators",
+"Topic :: Security",
+"Topic :: Utilities",
+"License :: OSI Approved :: MIT License",
+"Programming Language :: Python :: 3",
+"Programming Language :: Python :: 3.10",
+"Programming Language :: Python :: 3.11",
+"Programming Language :: Python :: 3.12",
+"Programming Language :: Python :: 3.13",
+"Programming Language :: Python :: 3.14",
+"Operating System :: OS Independent",
+"Environment :: Console"
+]
+
+dependencies = [
+"rich>=13.7.1",
+"pyfiglet>=1.0.2",
+"zxcvbn>=4.4.28"
+]
+
+[project.optional-dependencies]
+api = [
+"fastapi>=0.115.0",
+"uvicorn>=0.35.0",
+"python-multipart>=0.0.20"
+]
+
+gpu = [
+"cupy-cuda12x>=13.0.0"
+]
+
+websocket = [
+"websockets>=12.0"
+]
+
+all = [
+"fastapi>=0.115.0",
+"uvicorn>=0.35.0",
+"python-multipart>=0.0.20",
+"cupy-cuda12x>=13.0.0",
+"websockets>=12.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/Danyalkhattak/pawpy"
+Documentation = "https://github.com/Danyalkhattak/pawpy#readme"
+Repository = "https://github.com/Danyalkhattak/pawpy"
+Issues = "https://github.com/Danyalkhattak/pawpy/issues"
+
+[project.scripts]
+pawpy = "pawpy.cli:main"
+
+[tool.setuptools.packages.find]
+exclude = ["tests", "tests.*"]
+
 [tool.black]
 line-length = 88
+target-version = ["py310", "py311", "py312", "py313", "py314"]
 
 [tool.isort]
 profile = "black"

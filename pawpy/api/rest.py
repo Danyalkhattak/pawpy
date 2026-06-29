@@ -1,12 +1,10 @@
 """FastAPI REST endpoints for Pawpy."""
 
-from __future__ import annotations
-
 import logging
 import os
 import tempfile
 import uuid
-from typing import Any, Dict, Optional
+from typing import Annotated, Any, Dict
 
 logger = logging.getLogger("pawpy.api")
 
@@ -43,13 +41,13 @@ def get_app():
 
     @app.post("/generate")
     async def generate_wordlist(
-        profile: UploadFile = File(...),
-        output: Optional[str] = Form(None),
-        lite: bool = Form(False),
-        extreme: bool = Form(False),
-        min_length: Optional[int] = Form(None),
-        min_strength: Optional[int] = Form(None),
-        markov: bool = Form(False),
+        profile: Annotated[UploadFile, File(...)],
+        output: Annotated[str | None, Form()] = None,
+        lite: Annotated[bool, Form()] = False,
+        extreme: Annotated[bool, Form()] = False,
+        min_length: Annotated[int | None, Form()] = None,
+        min_strength: Annotated[int | None, Form()] = None,
+        markov: Annotated[bool, Form()] = False,
     ):
         """Generate a wordlist from an uploaded profile JSON file."""
         job_id = str(uuid.uuid4())[:8]
