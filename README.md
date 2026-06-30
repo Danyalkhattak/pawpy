@@ -3,7 +3,7 @@
 **The Most Powerful Wordlist Generator**
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue" alt="Version" />
+  <img src="https://img.shields.io/badge/version-1.0.1-blue" alt="Version" />
   <img src="https://img.shields.io/badge/python-3.8+-green" alt="Python" />
   <img src="https://img.shields.io/badge/license-MIT-orange" alt="License" />
   <img src="https://img.shields.io/badge/purpose-educational%20%7C%20authorised%20testing-red" alt="Purpose" />
@@ -108,7 +108,7 @@ The tool follows a modular pipeline architecture: profile data flows through suc
 ### From PyPI (recommended)
 
 ```bash
-pip install pawpy
+pip install pawpy-cli
 ```
 
 ### From Source
